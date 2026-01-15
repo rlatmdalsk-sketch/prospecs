@@ -5,6 +5,8 @@ import { twMerge } from "tailwind-merge";
 import Input from "../components/common/input.tsx";
 import Select from "../components/common/select.tsx";
 import Button from "../components/common/Button.tsx";
+import {AxiosError} from "axios";
+import {registerUser} from "../api/auth.api.ts";
 
 function Register() {
     const navigate = useNavigate();
@@ -13,6 +15,7 @@ function Register() {
         register,
         handleSubmit,
         watch,
+        setError,
         formState: { errors, isSubmitting },
     } = useForm<RegisterFormType>({
         defaultValues: {
@@ -22,7 +25,23 @@ function Register() {
         },
     });
 
-    const onSubmit = (data: RegisterFormType) => {};
+    const onSubmit = async(data: RegisterFormType) => {
+        setError("root", {message: ""});
+        try {
+            await registerUser(data);
+            alert("회원가입이 완료되었습니다. 로그인해주세요")
+            navigate("/login");
+        } catch (error) {
+
+            //axios에서 발생된 error라면
+            if (error instanceof AxiosError) {
+              setError("root", {message: error.response?.data?.message || "회원가입에 실패했습니다."});
+            } else {
+                //axios가 아닌곳에서 나타난 에러
+                setError("root", {message: "오류가 발생했습니다."})
+            }
+        }
+    };
 
     return (
         <>

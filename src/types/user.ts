@@ -12,3 +12,16 @@ export interface RegisterFormType {
     address1?: string;
     address2?: string;
 }
+
+export interface User {
+    email: string;
+    name: string;
+    phone: string;
+    emailOptIn: boolean;
+    smsOptIn: boolean;
+    birthdate: string;
+    gender: "MALE" | "FEMALE";
+    zipCode?: string;
+    address1?: string;
+    address2?: string;
+}
