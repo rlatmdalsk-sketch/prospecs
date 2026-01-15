@@ -3,17 +3,22 @@ import type { FieldError, UseFormRegisterReturn } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+    label?: string;
     fullWidth?: boolean;
     registration: UseFormRegisterReturn; // register의 반환값 타입
     error?: FieldError;
 }
 
-function Input({ fullWidth, registration, error,  className, ...props }: InputProps) {
+function Input({ label, fullWidth, registration, error, id, className, ...props }: InputProps) {
     return (
         <>
             <div className={twMerge([fullWidth && "w-full"])}>
+                {label && (
+                    <label htmlFor={id} className={twMerge("block","text-xs","font-bold","text`-gray-500","mb-1")}>{label}</label>
+                )}
                 {/* autoComplete속성: 자동완성을 막아줌*/}
                 <input
+                    id={id}
                     className={twMerge(
                         "w-full",
                         "p-4",
