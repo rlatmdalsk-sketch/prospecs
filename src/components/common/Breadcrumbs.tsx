@@ -10,10 +10,10 @@ interface BreadcrumbsProps {
 
 function Breadcrumbs({ items, className }: BreadcrumbsProps) {
     return (
-        <nav className={twMerge(["flex", "items-center", "gap-2", className])}>
-            <ol className={twMerge(["flex", "items-center", "gap-2"])}>
-                <li className={twMerge(["flex", "items-center"])}>
-                    <Link to={"/"} className={twMerge(["text-gray-500", "hover:text-black"])}>
+        <nav className={twMerge("flex", "items-center", "gap-2", className)}>
+            <ol className={twMerge("flex", "items-center", "gap-2")}>
+                <li className={twMerge("flex", "items-center")}>
+                    <Link to="/" className={twMerge("text-gray-500", "hover:text-black")}>
                         Home
                     </Link>
                 </li>
@@ -26,14 +26,17 @@ function Breadcrumbs({ items, className }: BreadcrumbsProps) {
                     const isLast = index === items.length - 1;
 
                     return (
-                        <li key={index} className={twMerge(["flex", "items-center", "gap-2"])}>
-                            <FiChevronRight className={twMerge(["w-4", "h-4", "text-gray-400"])} />
+                        <li key={index} className={twMerge("flex", "items-center", "gap-2")}>
+                            <FiChevronRight className={twMerge("w-4", "h-4", "text-gray-400")} />
                             {isLast ? (
-                                <span className={twMerge(["text-black"])}>{item.name}</span>
+                                <span className={twMerge("font-semibold", "text-black")}>
+                                    {item.name}
+                                </span>
                             ) : (
                                 <Link
                                     to={`/category/${item.id}`}
-                                    className={twMerge(["text-gray-500", "hover:text-black"])}>
+                                    className={twMerge("text-gray-500", "hover:text-black")}
+                                >
                                     {item.name}
                                 </Link>
                             )}
