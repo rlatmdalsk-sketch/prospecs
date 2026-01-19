@@ -1,3 +1,4 @@
+
 export interface Category {
     id: number;
     name: string;
@@ -19,18 +20,23 @@ export interface CategoryTree extends Category {
     children: Category[];
 }
 
-export const CategoryTree = {
+export const CategoryTree: CategoryTree = {
     id: 0,
     name: "Running",
     path: "/category/1",
     parentId: 0,
     createdAt: "",
     updatedAt: "",
+    BreadcrumbsItem: [],
     children: [
         {
             id: 1,
             name: "shoes",
             path: "/category/6",
+            parentId: 0,
+            createdAt: "",
+            updatedAt: "",
+            BreadcrumbsItem: []
         }
     ]
 }
