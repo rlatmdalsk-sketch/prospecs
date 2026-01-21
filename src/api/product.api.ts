@@ -26,3 +26,8 @@ export const getProducts = async (data: GetProductsParams) => {
     });
     return response.data;
 };
+
+export const getProduct = async (id: string) => {
+    const response = await httpClient.get(`/products/${id}`);
+    return response.data;
+}

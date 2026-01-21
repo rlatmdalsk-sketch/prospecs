@@ -33,7 +33,7 @@ function MainVisual() {
     const [secondSwiper, setSecondSwiper] = useState<SwiperType | null>(null);
 
     return (
-        <section className={twMerge("w-full", "flex", "flex-col", "group")}>
+        <section className={twMerge("w-full", "flex", "flex-col", "group", "bg-[#f2f3f5]")}>
             {/*이미지 슬라이더*/}
             <div
                 className={twMerge(

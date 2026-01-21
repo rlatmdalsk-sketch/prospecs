@@ -9,7 +9,7 @@ interface ProductCardProps {
 function ProductCard({ product }: ProductCardProps) {
     const thumbnail = product.colors[0].images[0].url;
     return (
-        <Link to={`/products/${product.id}`}
+        <Link to={`/product/${product.id}`}
             className={twMerge(
                 ["group", "relative", "aspect-[3/4]", "overflow-hidden"],
                 ["flex", "flex-col", "gap-2"],
