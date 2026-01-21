@@ -3,6 +3,7 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import type { Product, ProductColor, ProductImage } from "../../types/product.ts";
 import { getProduct } from "../../api/product.api.ts";
 import { twMerge } from "tailwind-merge";
+import Button from "../../components/common/Button.tsx";
 
 function ProductDetailPage() {
     const { id } = useParams();
@@ -92,7 +93,24 @@ function ProductDetailPage() {
                         setMainImage={setMainImage}
                         setSelectedSize={setSelectedSize}
                     />
+
+                    <RightSizeSelecetBox
+                        currentColor={currentColor}
+                        selectedSize={selectedSize}
+                        setSelectedSize={setSelectedSize}
+                    />
+
+                    <RightQuantitySelectBox
+                        price={product.price}
+                        quantity={quantity}
+                        setQuantity={setQuantity}
+                    />
+                    <div className={twMerge("flex","flex-col","gap-3")}>
+                        <Button size={"lg"}>바로구매</Button>
+                        <Button size={"lg"} variant={"secondary"}>장바구니</Button>
+                    </div>
                 </div>
+
             </div>
 
             {/* 상품 상세 */}
@@ -251,6 +269,118 @@ function RightColorSelectBox({
                         </button>
                     );
                 })}
+            </div>
+        </div>
+    );
+}
+
+interface RightSizeSelectBoxProps {
+    currentColor: ProductColor | undefined;
+    selectedSize: string;
+    setSelectedSize: Dispatch<SetStateAction<string>>;
+}
+
+function RightSizeSelecetBox({
+    currentColor,
+    selectedSize,
+    setSelectedSize,
+}: RightSizeSelectBoxProps) {
+    return (
+        <div className={twMerge(["w-full"])}>
+            <div className={twMerge(["text-sm", "font-bold", "mb-3"])}>사이즈</div>
+            <div className={twMerge(["flex", "flex-wrap", "gap-2"])}>
+                {currentColor?.sizes.map((size, index) => {
+                    const isSoldOut = size.stock <= 0;
+                    const isSelected = selectedSize === size.size;
+
+                    return (
+                        <button
+                            key={index}
+                            disabled={isSoldOut}
+                            className={twMerge(
+                                "h-10 w-[50px] px-3 text-sm border transition-colors",
+                                isSelected
+                                    ? "bg-black text-white border-black"
+                                    : isSoldOut
+                                      ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
+                                      : "border-gray-300 text-gray-700 hover:border-black",
+                            )}
+                            onClick={() => setSelectedSize(size.size)}>
+                            {size.size}
+                        </button>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
+interface RightQuantitySelectBoxProps {
+    price: number;
+    quantity: number;
+    setQuantity: Dispatch<SetStateAction<number>>;
+}
+
+function RightQuantitySelectBox({ price, quantity, setQuantity }: RightQuantitySelectBoxProps) {
+    const handleQuantity = (type: "plus" | "minus") => {
+        if (type === "plus") {
+            setQuantity(quantity + 1);
+        }
+
+        else {
+            setQuantity(prev => (prev > 1 ? -1 : 1));
+        }
+    }
+
+    return (
+        <div className={twMerge("bg-gray-50","p-5", "rounded-sm")}>
+            <div className={twMerge("flex", "justify-between", "items-center", "mb-4")}>
+                <span className={twMerge("text-sm", "font-bold", "text-gray-700")}>수량</span>
+                <div className={twMerge("flex", "items-center", "bg-white", "border-gray-300")}>
+                    <button
+                        className={twMerge([
+                            "w-8",
+                            "h-8",
+                            "flex",
+                            "justify-center",
+                            "items-center",
+                            "text-gray-600",
+                        ])}
+                        onClick={()=> handleQuantity("minus")}
+                    >
+                        -
+                    </button>
+                    <span className={twMerge("w-10","h-8","flex","justify-center","items-center")}>{quantity}</span>
+                    <button
+                        className={twMerge([
+                            "w-8",
+                            "h-8",
+                            "flex",
+                            "justify-center",
+                            "items-center",
+                            "text-gray-600",
+                        ])}
+                        onClick={()=> handleQuantity("plus")}
+                    >
+                        +
+                    </button>
+                </div>
+            </div>
+            <div
+                className={twMerge(
+                    "flex",
+                    "justify-between",
+                    "items-center",
+                    "pt-4",
+                    "border-t",
+                )}>
+                <span className={twMerge("text-sm", "font-bold", "text-gray-700")}>합계</span>
+                <div>
+                    <span className={twMerge("text-2xl","font-extrabold","text-orange-400")}>
+                         {(quantity * price).toLocaleString()}
+                    </span>
+                    <span className={twMerge("text-xs","ml-1")}>원</span>
+                </div>
             </div>
         </div>
     );

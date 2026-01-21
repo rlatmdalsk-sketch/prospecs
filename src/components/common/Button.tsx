@@ -28,6 +28,7 @@ function Button({
         "focus:outline-none",
         "disabled:opacity-50",
         "disabled:cursor-not-allowed",
+        "border",
     );
     //변형(색상) 스타일
     const variants = {
