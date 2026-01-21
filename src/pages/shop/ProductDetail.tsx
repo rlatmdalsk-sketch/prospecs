@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router";
-import { useEffect, useState } from "react";
-import type { Product } from "../../types/product.ts";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import type { Product, ProductColor, ProductImage } from "../../types/product.ts";
 import { getProduct } from "../../api/product.api.ts";
 import { twMerge } from "tailwind-merge";
 
@@ -11,17 +11,17 @@ function ProductDetailPage() {
     const [loading, setLoading] = useState(true);
     const [product, setProduct] = useState<Product | null>(null);
 
-    //색상 저장 state
+    // 색상 저장 state
     const [selectedColorId, setSelectedColorId] = useState<number | null>(null);
 
-    //사이즈 선택
+    // 메인 이미지 관련 state > URL
+    const [mainImage, setMainImage] = useState<string>("");
+
+    // 사이즈 선택 state
     const [selectedSize, setSelectedSize] = useState<string>("");
 
-    //수량 선택
+    // 수량 선택 state
     const [quantity, setQuantity] = useState(1);
-
-    //메인 이미지 관련 state state > URL
-    const [mainImage, setMainImage] = useState<string>("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,13 +32,12 @@ function ProductDetailPage() {
                 setProduct(result);
 
                 if (result.colors && result.colors.length > 0) {
-                        const firstColor = result.colors[0];
-                        setSelectedColorId(firstColor.id);
-                        if (firstColor.images.length > 0) {
-                            setMainImage(firstColor.images[0].url);
-                        }
+                    const firstColor = result.colors[0];
+                    setSelectedColorId(firstColor.id);
+                    if (firstColor.images.length > 0) {
+                        setMainImage(firstColor.images[0].url);
+                    }
                 }
-
             } catch (e) {
                 console.log(e);
             } finally {
@@ -49,30 +48,56 @@ function ProductDetailPage() {
         fetchData().then(() => {});
     }, [id]);
 
-    if (loading) return <div className={twMerge("py-40","text-center")}>Loading...</div>
-    if (!product) return <div className={twMerge("py-40", "text-center")}>상품 정보가 없습니다.</div>
+    if (loading) return <div className={twMerge(["py-40", "text-center"])}>Loading...</div>;
+    if (!product)
+        return <div className={twMerge(["py-40", "text-center"])}>상품 정보가 없습니다.</div>;
 
+    // 화면에다 출력해줄 정보는 color에 종속되어 있고, color가 굉장히 많은 정보를 갖고 있음
     const currentColor = product.colors.find(color => color.id === selectedColorId);
 
     return (
-        <>
-            <div className={twMerge("w-full", "max-w-350", "mx-auto", "py-40")}>
-                {/*상단 상품 정보*/}
-                <div className={twMerge("flex","gap-14")}>
-                    {/*이미지*/}
-                    <div className={twMerge("w-2/3","space-y-3")}></div>
-                    {/*큰 이미지박스*/}
+        <div className={twMerge(["w-full", "max-w-350", "mx-auto", "py-40"])}>
+            {/* 상단 상품 정보 */}
+            <div className={twMerge(["flex", "gap-14"])}>
+                {/* 왼쪽 (이미지) */}
+                <div className={twMerge(["w-2/3", "space-y-3"])}>
+                    {/* 큰 이미지 박스 */}
                     <MainImageBox product={product} mainImage={mainImage} />
-
-                    {/*작은 이미지 박스*/}
-
-                    {/*상품정보*/}
-                    <div className={"w-1/3"}></div>
+                    {/* 작은 이미지가 한 줄로 들어가는 박스 */}
+                    {currentColor && currentColor.images.length > 1 && (
+                        <div className={twMerge(["flex", "gap-2", "overflow-x-auto"])}>
+                            {currentColor.images.map((image, index) => (
+                                <ThumbnailBox
+                                    key={index}
+                                    mainImage={mainImage}
+                                    setMainImage={setMainImage}
+                                    image={image}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
-                {/*상품 상세*/}
-                <div></div>
+
+                {/* 오른쪽 (상품 정보) */}
+                <div className={twMerge(["w-1/3", "space-y-6"])}>
+                    {/* 상품 대표 정보 */}
+                    <RightHeaderBox product={product} currentColor={currentColor} />
+
+                    {/* 옵션 선택 영역 */}
+                    <RightColorSelectBox
+                        product={product}
+                        currentColor={currentColor}
+                        selectedColorId={selectedColorId}
+                        setSelectedColorId={setSelectedColorId}
+                        setMainImage={setMainImage}
+                        setSelectedSize={setSelectedSize}
+                    />
+                </div>
             </div>
-        </>
+
+            {/* 상품 상세 */}
+            <div></div>
+        </div>
     );
 }
 
@@ -83,24 +108,150 @@ interface MainImageBoxProps {
     mainImage: string;
 }
 
-function MainImageBox({product, mainImage}: MainImageBoxProps) {
-    return <div className={twMerge("aspect-4/5","w-full","bg-gray-50","overflow-hidden","relative")}>
-        {mainImage ? (
-            <img src={mainImage} alt={"Main"} className={twMerge("w-full","h-full","object-cover")} />
-        ) : (
-            <div className={twMerge("w-full","h-full","flex","items-center","justify-center","text-gray-300")}>
-                No Image
-            </div>
-        )}
+function MainImageBox({ product, mainImage }: MainImageBoxProps) {
+    return (
+        <div
+            className={twMerge(
+                ["aspect-4/5", "w-full", "overflow-hidden", "relative"],
+                ["bg-gray-50"],
+            )}>
+            {/* 이미지 */}
+            {mainImage ? (
+                <img
+                    src={mainImage}
+                    alt={"Main"}
+                    className={twMerge(["w-full", "h-full", "object-cover"])}
+                />
+            ) : (
+                <div
+                    className={twMerge(
+                        ["w-full", "h-full"],
+                        ["flex", "items-center", "justify-center", "text-gray-300"],
+                    )}>
+                    No Image
+                </div>
+            )}
 
-        {/*뱃지*/}
-        <div className={twMerge("absolute","top-4","left-4",["flex","gap-2"])}>
-            {product.isBest && (
-                <span className={twMerge("bg-white", "text-xs","font-bold","px-2","py-1")}>BEST</span>
-            )}
-            {product.isNew && (
-                <span className={twMerge("bg-white", "text-xs","font-bold","px-2","py-1")}>New</span>
-            )}
+            {/* 뱃지 */}
+            <div className={twMerge(["absolute", "top-4", "left-4"], ["flex", "gap-2"])}>
+                {product.isBest && (
+                    <span className={twMerge(["bg-white", "text-xs", "font-bold", "px-2", "py-1"])}>
+                        BEST
+                    </span>
+                )}
+                {product.isNew && (
+                    <span className={twMerge(["bg-white", "text-xs", "font-bold", "px-2", "py-1"])}>
+                        NEW
+                    </span>
+                )}
+            </div>
         </div>
-    </div>
+    );
+}
+
+interface ThumbnailBoxProps {
+    image: ProductImage;
+    mainImage: string;
+    setMainImage: Dispatch<SetStateAction<string>>;
+}
+
+function ThumbnailBox({ image, mainImage, setMainImage }: ThumbnailBoxProps) {
+    return (
+        <button
+            onMouseEnter={() => setMainImage(image.url)}
+            className={twMerge(
+                ["w-20", "h-24", "bg-gray-50", "overflow-hidden"],
+                ["border"],
+                mainImage === image.url ? "border-black" : "border-transparent",
+            )}>
+            <img
+                src={image.url}
+                alt={"thumb"}
+                className={twMerge(["w-full", "h-full", "object-cover"])}
+            />
+        </button>
+    );
+}
+
+interface RightHeaderBoxProps {
+    product: Product;
+    currentColor: ProductColor | undefined;
+}
+
+function RightHeaderBox({ product, currentColor }: RightHeaderBoxProps) {
+    return (
+        <div className={twMerge(["border-b", "border-gray-200", "pb-6"])}>
+            <h1 className={twMerge(["text-3xl", "font-bold"])}>{product.name}</h1>
+            <div className={twMerge(["text-xs", "text-gray-500"])}>{currentColor?.productCode}</div>
+            <div className={twMerge(["mt-6"])}>
+                <span className={twMerge(["text-2xl", "font-bold", "text-gray-900"])}>
+                    {product.price.toLocaleString()}
+                </span>
+                <span className={twMerge(["text-lg", "font-medium", "ml-1"])}>원</span>
+            </div>
+        </div>
+    );
+}
+
+interface RightColorSelectBoxProps {
+    product: Product;
+    currentColor: ProductColor | undefined;
+    selectedColorId: number | null;
+    setSelectedColorId: Dispatch<SetStateAction<number | null>>;
+    setMainImage: Dispatch<SetStateAction<string>>;
+    setSelectedSize: Dispatch<SetStateAction<string>>;
+}
+
+function RightColorSelectBox({
+    product,
+    currentColor,
+    selectedColorId,
+    setSelectedColorId,
+    setMainImage,
+    setSelectedSize,
+}: RightColorSelectBoxProps) {
+    return (
+        <div className={twMerge(["w-full"])}>
+            <div className={twMerge(["text-sm", "font-bold", "mb-3"])}>
+                색상
+                <span className={twMerge(["text-gray-500", "ml-2"])}>
+                    {currentColor?.colorName}
+                </span>
+            </div>
+            <div className={twMerge(["flex", "flex-wrap", "gap-2"])}>
+                {product.colors.map((color, index) => {
+                    const thumb = color.images[0]?.url;
+                    const isSelected = selectedColorId === color.id;
+
+                    return (
+                        <button
+                            key={index}
+                            className={twMerge(
+                                ["w-16", "h-16", "overflow-hidden", "relative"],
+                                isSelected
+                                    ? ["border-black", "border-2"]
+                                    : ["border-gray-200", "border"],
+                            )}
+                            onClick={() => {
+                                setSelectedColorId(color.id);
+                                setMainImage(thumb || "");
+                                setSelectedSize("");
+                            }}>
+                            {thumb ? (
+                                <img
+                                    src={thumb}
+                                    alt={color.colorName}
+                                    className={twMerge(["w-full", "h-full", "object-cover"])}
+                                />
+                            ) : (
+                                <div className={twMerge("w-full", "h-full", "bg-gray-50")}>
+                                    No Image
+                                </div>
+                            )}
+                        </button>
+                    );
+                })}
+            </div>
+        </div>
+    );
 }
