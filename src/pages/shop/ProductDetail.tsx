@@ -4,6 +4,7 @@ import type { Product, ProductColor, ProductImage } from "../../types/product.ts
 import { getProduct } from "../../api/product.api.ts";
 import { twMerge } from "tailwind-merge";
 import Button from "../../components/common/Button.tsx";
+import Acordion from "../../components/common/Acordion.tsx";
 
 function ProductDetailPage() {
     const { id } = useParams();
@@ -109,7 +110,11 @@ function ProductDetailPage() {
                         <Button size={"lg"}>바로구매</Button>
                         <Button size={"lg"} variant={"secondary"}>장바구니</Button>
                     </div>
+                    <Acordion title={"상품 설명"}>
+                        {product.summary}
+                    </Acordion>
                 </div>
+
 
             </div>
 
