@@ -4,10 +4,12 @@ import useAuthStore from "../../stores/useAuthStore.ts";
 import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import { FiMinus, FiPlus, FiX } from "react-icons/fi";
+import useOrderStore from "../../stores/useOrderStore.ts";
 
 function CartPage() {
     const navigate = useNavigate();
     const { items, loading, fetchCart, updateQuantity, removeItem, getTotalPrice } = useCartStore();
+    const { setOrderItems } = useOrderStore();
     const { isLoggedIn } = useAuthStore();
 
     useEffect(() => {
@@ -38,6 +40,7 @@ function CartPage() {
             return;
         }
 
+        setOrderItems(items);
         navigate("/order");
     };
 
@@ -85,7 +88,6 @@ function CartPage() {
                                         <div className={twMerge("w-24", "h-28", "bg-gray-100")}>
                                             {image && (
                                                 <img
-                                                    alt={product}
                                                     src={image}
                                                     className={twMerge(
                                                         "w-full",
