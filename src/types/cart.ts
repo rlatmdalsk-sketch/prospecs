@@ -8,7 +8,7 @@ export interface CartItem {
         stock: number;
         productColor: {
             colorName: string;
-            images: { url: string }[];
+            images: { url: string}[];
             product: {
                 id: number;
                 name: string;
@@ -21,5 +21,4 @@ export interface CartItem {
 export interface CartResponse {
     id: number;
     items: CartItem[];
-
 }

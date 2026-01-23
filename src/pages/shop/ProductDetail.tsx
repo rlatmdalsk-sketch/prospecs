@@ -4,9 +4,9 @@ import type { Product, ProductColor, ProductImage } from "../../types/product.ts
 import { getProduct } from "../../api/product.api.ts";
 import { twMerge } from "tailwind-merge";
 import Button from "../../components/common/Button.tsx";
-import Acordion from "../../components/common/Acordion.tsx";
 import useCartStore from "../../stores/useCartStore.ts";
 import useAuthStore from "../../stores/useAuthStore.ts";
+import Accordion from "../../components/common/Accordion.tsx";
 
 function ProductDetailPage() {
     const { id } = useParams();
@@ -61,11 +61,9 @@ function ProductDetailPage() {
     // 화면에다 출력해줄 정보는 color에 종속되어 있고, color가 굉장히 많은 정보를 갖고 있음
     const currentColor = product.colors.find(color => color.id === selectedColorId);
 
-    const handleAddTocart = async () => {
+    const handleAddToCart = async () => {
         if (!isLoggedIn) {
-            const confirmLogin = window.confirm(
-                "로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?",
-            );
+            const confirmLogin = window.confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?");
             if (!confirmLogin) {
                 navigate("/login");
             }
@@ -76,27 +74,31 @@ function ProductDetailPage() {
             alert("사이즈를 선택해주세요.");
             return;
         }
+
+        // 우리가 addCart에 전달해야 되는 정보는 sizeId 와 quantity
+        // selectedSize는 "230" 이라는 값을 갖고 있는 state
         const targetSizeObj = currentColor.sizes.find(size => size.size === selectedSize);
         if (!targetSizeObj) {
             alert("유효하지 않은 사이즈입니다.");
             return;
         }
+
         if (targetSizeObj.stock <= 0) {
-            alert ("품절된 상품입니다.");
+            alert("품절된 상품입니다.");
             return;
         }
 
         try {
-            await addItem(targetSizeObj.id.quantity);
-            if (window.confirm("장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?")){
+            await addItem(targetSizeObj.id, quantity);
+            if (window.confirm("장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?")) {
                 navigate("/cart");
             }
         } catch (e) {
             console.log(e);
             alert("장바구니 담기에 실패했습니다.");
         }
+    }
 
-    };
 
     return (
         <div className={twMerge(["w-full", "max-w-350", "mx-auto", "py-40"])}>
@@ -136,7 +138,7 @@ function ProductDetailPage() {
                         setSelectedSize={setSelectedSize}
                     />
 
-                    <RightSizeSelecetBox
+                    <RightSizeSelectBox
                         currentColor={currentColor}
                         selectedSize={selectedSize}
                         setSelectedSize={setSelectedSize}
@@ -147,23 +149,27 @@ function ProductDetailPage() {
                         quantity={quantity}
                         setQuantity={setQuantity}
                     />
-                    <div className={twMerge("flex", "flex-col", "gap-3")}>
+
+                    <div className={twMerge(["flex", "flex-col", "gap-3"])}>
                         <Button size={"lg"}>바로구매</Button>
-                        <Button size={"lg"} variant={"secondary"} onClick={handleAddTocart}>
+                        <Button size={"lg"} variant={"secondary"} onClick={handleAddToCart}>
                             장바구니
                         </Button>
                     </div>
-                    <Acordion title={"상품 설명"}>{product.summary}</Acordion>
-                    <Acordion title={"상품 정보 고시"}>
-                        <RightInformation product={product} />
-                    </Acordion>
+
+                    <Accordion title={"상품 설명"}>{product.summary}</Accordion>
+
+                    <Accordion title={"상품 정보 고시"}>
+                        <RightInformationBox product={product} />
+                    </Accordion>
                 </div>
             </div>
 
             {/* 상품 상세 */}
             <div
-                className={twMerge("mx-auto", "max-w-215", "mt-24")}
-                dangerouslySetInnerHTML={{ __html: product.description }}></div>
+                className={twMerge(["mx-auto", "max-w-215", "mt-24"])}
+                dangerouslySetInnerHTML={{ __html: product.description }}
+            />
         </div>
     );
 }
@@ -270,13 +276,13 @@ interface RightColorSelectBoxProps {
 }
 
 function RightColorSelectBox({
-    product,
-    currentColor,
-    selectedColorId,
-    setSelectedColorId,
-    setMainImage,
-    setSelectedSize,
-}: RightColorSelectBoxProps) {
+                                 product,
+                                 currentColor,
+                                 selectedColorId,
+                                 setSelectedColorId,
+                                 setMainImage,
+                                 setSelectedSize,
+                             }: RightColorSelectBoxProps) {
     return (
         <div className={twMerge(["w-full"])}>
             <div className={twMerge(["text-sm", "font-bold", "mb-3"])}>
@@ -329,11 +335,11 @@ interface RightSizeSelectBoxProps {
     setSelectedSize: Dispatch<SetStateAction<string>>;
 }
 
-function RightSizeSelecetBox({
-    currentColor,
-    selectedSize,
-    setSelectedSize,
-}: RightSizeSelectBoxProps) {
+function RightSizeSelectBox({
+                                currentColor,
+                                selectedSize,
+                                setSelectedSize,
+                            }: RightSizeSelectBoxProps) {
     return (
         <div className={twMerge(["w-full"])}>
             <div className={twMerge(["text-sm", "font-bold", "mb-3"])}>사이즈</div>
@@ -347,12 +353,13 @@ function RightSizeSelecetBox({
                             key={index}
                             disabled={isSoldOut}
                             className={twMerge(
-                                "h-10 w-[50px] px-3 text-sm border transition-colors",
+                                ["h-10", "w-12.6", "px-3"],
+                                ["text-sm", "border"],
                                 isSelected
-                                    ? "bg-black text-white border-black"
+                                    ? ["bg-black", "text-white"]
                                     : isSoldOut
-                                      ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
-                                      : "border-gray-300 text-gray-700 hover:border-black",
+                                        ? ["bg-gray-100", "text-gray-500", "cursor-not-allowed"]
+                                        : ["border-gray-300", "text-gray-700"],
                             )}
                             onClick={() => setSelectedSize(size.size)}>
                             {size.size}
@@ -375,106 +382,111 @@ function RightQuantitySelectBox({ price, quantity, setQuantity }: RightQuantityS
         if (type === "plus") {
             setQuantity(quantity + 1);
         } else {
-            setQuantity(prev => (prev > 1 ? -1 : 1));
+            setQuantity(prev => (prev > 1 ? prev - 1 : 1));
         }
     };
 
     return (
-        <div className={twMerge("bg-gray-50", "p-5", "rounded-sm")}>
-            <div className={twMerge("flex", "justify-between", "items-center", "mb-4")}>
-                <span className={twMerge("text-sm", "font-bold", "text-gray-700")}>수량</span>
-                <div className={twMerge("flex", "items-center", "bg-white", "border-gray-300")}>
+        <div className={twMerge(["bg-gray-50", "p-5", "rounded-sm"])}>
+            <div className={twMerge(["flex", "justify-between", "items-center", "mb-4"])}>
+                <span className={twMerge(["text-sm", "font-bold", "text-gray-700"])}>수량</span>
+                <div
+                    className={twMerge(
+                        ["flex", "items-center"],
+                        ["bg-white", "border", "border-gray-300"],
+                    )}>
                     <button
-                        className={twMerge([
-                            "w-8",
-                            "h-8",
-                            "flex",
-                            "justify-center",
-                            "items-center",
-                            "text-gray-600",
-                        ])}
+                        className={twMerge(
+                            ["w-8", "h-8", "flex", "justify-center", "items-center"],
+                            ["text-gray-600"],
+                        )}
                         onClick={() => handleQuantity("minus")}>
                         -
                     </button>
                     <span
-                        className={twMerge(
+                        className={twMerge([
                             "w-10",
                             "h-8",
                             "flex",
                             "justify-center",
                             "items-center",
-                        )}>
+                        ])}>
                         {quantity}
                     </span>
                     <button
-                        className={twMerge([
-                            "w-8",
-                            "h-8",
-                            "flex",
-                            "justify-center",
-                            "items-center",
-                            "text-gray-600",
-                        ])}
+                        className={twMerge(
+                            ["w-8", "h-8", "flex", "justify-center", "items-center"],
+                            ["text-gray-600"],
+                        )}
                         onClick={() => handleQuantity("plus")}>
                         +
                     </button>
                 </div>
             </div>
-            <div className={twMerge("flex", "justify-between", "items-center", "pt-4", "border-t")}>
-                <span className={twMerge("text-sm", "font-bold", "text-gray-700")}>합계</span>
+            <div
+                className={twMerge([
+                    "flex",
+                    "justify-between",
+                    "items-center",
+                    "pt-4",
+                    "border-t",
+                ])}>
+                <span className={twMerge(["text-sm", "font-bold", "text-gray-700"])}>
+                    총 상품금액
+                </span>
                 <div>
-                    <span className={twMerge("text-2xl", "font-extrabold", "text-orange-400")}>
+                    <span className={twMerge(["text-2xl", "font-extrabold", "text-orange-600"])}>
                         {(quantity * price).toLocaleString()}
                     </span>
-                    <span className={twMerge("text-xs", "ml-1")}>원</span>
+                    <span className={twMerge(["text-sm", "ml-1"])}>원</span>
                 </div>
             </div>
         </div>
     );
 }
 
-interface RightInformationProps {
+interface RightInformationBoxProps {
     product: Product;
 }
 
-function RightInformation({ product }: RightInformationProps) {
+function RightInformationBox({ product }: RightInformationBoxProps) {
     return (
-        <table className={twMerge("w-full", "text-xs")}>
+        <table className={twMerge(["w-full", "text-xs", "text-left"])}>
             <colgroup>
                 <col className={"w-40"} />
                 <col />
             </colgroup>
             <tbody>
-                <tr>
-                    <th className="py-3 font-medium text-gray-900">소재</th>
-                    <td className="py-3 text-gray-600">{product.material || "-"}</td>
-                </tr>
-                <tr>
-                    <th className="py-3 font-medium text-gray-900">제조사</th>
-                    <td className="py-3 text-gray-600">{product.manufacturer || "-"}</td>
-                </tr>
-                <tr>
-                    <th className="py-3 font-medium text-gray-900">제조국</th>
-                    <td className="py-3 text-gray-600">{product.originCountry || "-"}</td>
-                </tr>
-                <tr>
-                    <th className="py-3 font-medium text-gray-900">제조년월</th>
-                    <td className="py-3 text-gray-600">{product.manufactureDate || "-"}</td>
-                </tr>
-                <tr>
-                    <th className="py-3 font-medium text-gray-900">취급시 주의사항</th>
-                    <td className="py-3 text-gray-600 leading-relaxed">
-                        {product.careInstructions || "-"}
-                    </td>
-                </tr>
-                <tr>
-                    <th className="py-3 font-medium text-gray-900">품질보증기준</th>
-                    <td className="py-3 text-gray-600">{product.qualityAssurance || "-"}</td>
-                </tr>
-                <tr>
-                    <th className="py-3 font-medium text-gray-900">A/S 책임자/전화번호</th>
-                    <td className="py-3 text-gray-600">{product.asPhone || "-"}</td>
-                </tr>
+            <tr>
+                <th className="py-3 font-medium text-gray-900">소재</th>
+                <td className="py-3 text-gray-600">{product.material || "-"}</td>
+            </tr>
+            <tr>
+                <th className="py-3 font-medium text-gray-900">제조사</th>
+                <td className="py-3 text-gray-600">{product.manufacturer || "-"}</td>
+            </tr>
+            <tr>
+                <th className="py-3 font-medium text-gray-900">제조국</th>
+                <td className="py-3 text-gray-600">{product.originCountry || "-"}</td>
+            </tr>
+            <tr>
+                <th className="py-3 font-medium text-gray-900">제조년월</th>
+                <td className="py-3 text-gray-600">{product.manufactureDate || "-"}</td>
+            </tr>
+            <tr>
+                <th className="py-3 font-medium text-gray-900">취급시 주의사항</th>
+                <td className="py-3 text-gray-600 leading-relaxed">
+                    {product.careInstructions || "-"}
+                </td>
+            </tr>
+            <tr>
+                <th className="py-3 font-medium text-gray-900">품질보증기준</th>
+                <td className="py-3 text-gray-600">{product.qualityAssurance || "-"}</td>
+            </tr>
+            <tr>
+                <th className="py-3 font-medium text-gray-900">A/S 책임자/전화번호</th>
+                <td className="py-3 text-gray-600">{product.asPhone || "-"}</td>
+            </tr>
             </tbody>
         </table>
     );

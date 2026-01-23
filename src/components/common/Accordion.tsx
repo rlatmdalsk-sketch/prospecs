@@ -9,7 +9,7 @@ interface AcordionsProps {
     className?: string;
 }
 
-function Acordion({ title, children, defaultOpen = false, className = "" }: AcordionsProps) {
+function Accordion({ title, children, defaultOpen = false, className = "" }: AcordionsProps) {
     const [isOpen, setIsOpen] = useState(defaultOpen);
 
     return (
@@ -45,4 +45,4 @@ function Acordion({ title, children, defaultOpen = false, className = "" }: Acor
     );
 }
 
-export default Acordion;
+export default Accordion;
