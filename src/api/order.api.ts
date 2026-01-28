@@ -7,6 +7,6 @@ export const createOrder = async (data: CreateOrderRequest) => {
 }
 
 export const confirmOrder = async (data: ConfirmOrderRequest) => {
-    const response = await httpClient.post("/orders/confirm", data);
+    const response = await httpClient.post<Order>("/orders/confirm", data);
     return response.data;
 }

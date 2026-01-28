@@ -4,14 +4,17 @@ import type { Product, ProductColor, ProductImage } from "../../types/product.ts
 import { getProduct } from "../../api/product.api.ts";
 import { twMerge } from "tailwind-merge";
 import Button from "../../components/common/Button.tsx";
+import Accordion from "../../components/common/Accordion.tsx";
 import useCartStore from "../../stores/useCartStore.ts";
 import useAuthStore from "../../stores/useAuthStore.ts";
-import Accordion from "../../components/common/Accordion.tsx";
+import useOrderStore from "../../stores/useOrderStore.ts";
+import type { CartItem } from "../../types/cart.ts";
 
 function ProductDetailPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { addItem } = useCartStore();
+    const { setOrderItems } = useOrderStore();
     const { isLoggedIn } = useAuthStore();
 
     const [loading, setLoading] = useState(true);
@@ -99,6 +102,56 @@ function ProductDetailPage() {
         }
     }
 
+    const handleBuyNow = () => {
+        if (!isLoggedIn) {
+            const confirmLogin = window.confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?");
+            if (!confirmLogin) {
+                navigate("/login");
+            }
+            return;
+        }
+
+        if (!selectedSize || !currentColor) {
+            alert("사이즈를 선택해주세요.");
+            return;
+        }
+
+        // 우리가 addCart에 전달해야 되는 정보는 sizeId 와 quantity
+        // selectedSize는 "230" 이라는 값을 갖고 있는 state
+        const targetSizeObj = currentColor.sizes.find(size => size.size === selectedSize);
+        if (!targetSizeObj) {
+            alert("유효하지 않은 사이즈입니다.");
+            return;
+        }
+
+        if (targetSizeObj.stock <= 0) {
+            alert("품절된 상품입니다.");
+            return;
+        }
+
+        const mockCartItem: CartItem = {
+            id: -1,
+            quantity: quantity,
+            productSizeId: targetSizeObj.id,
+            productSize: {
+                id: targetSizeObj.id,
+                size: targetSizeObj.size,
+                stock: targetSizeObj.stock,
+                productColor: {
+                    colorName: currentColor.colorName,
+                    images: currentColor.images,
+                    product: {
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                    }
+                }
+            }
+        }
+
+        setOrderItems([mockCartItem]);
+        navigate("/order");
+    }
 
     return (
         <div className={twMerge(["w-full", "max-w-350", "mx-auto", "py-40"])}>
@@ -151,7 +204,7 @@ function ProductDetailPage() {
                     />
 
                     <div className={twMerge(["flex", "flex-col", "gap-3"])}>
-                        <Button size={"lg"}>바로구매</Button>
+                        <Button size={"lg"} onClick={handleBuyNow}>바로구매</Button>
                         <Button size={"lg"} variant={"secondary"} onClick={handleAddToCart}>
                             장바구니
                         </Button>
