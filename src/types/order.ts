@@ -64,6 +64,7 @@ export interface Order {
     id: number;
     orderNumber: string;
     recipientName: string;
+    recipientPhone: string;
     status: OrderStatus;
     totalAmount: number;
     createdAt: string;
@@ -75,4 +76,10 @@ export interface Order {
 
     items:OrderItem[];
     payment?: OrderPayment;
+}
+
+export interface CancleOrderResponse {
+    message: string;
+    orderId: string;
+    status: string;
 }

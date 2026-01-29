@@ -118,7 +118,7 @@ function Header() {
             )}>
             <div
                 className={twMerge(
-                    ["container", "mx-auto", "px-4", "h-20"],
+                    ["w-full", "mx-auto", "px-4", "h-20"],
                     ["flex", "justify-between", "items-center"],
                 )}>
                 {/* 왼쪽 영역 */}
@@ -193,12 +193,17 @@ function Header() {
                         </button>
                     </div>
                     {isLoggedIn && user ? (
+                        <>
+                            <Link to={"/my"} className={twMerge("text-sm","font-bold")}>
+                                MYPAGE
+                            </Link>
                         <button
                             onClick={handleLogout}
                             className="text-sm font-bold hover:text-gray-500 transition-colors">
                             LOGOUT
                         </button>
-                    ) : (
+                        </>
+                        ) : (
                         <Link
                             to={"/login"}
                             className={twMerge(["text-sm", "font-bold", "hidden", "md:block"])}>

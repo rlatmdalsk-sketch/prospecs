@@ -10,6 +10,9 @@ import CartPage from "../pages/shop/CartPage.tsx";
 import OrderPage from "../pages/shop/OrderPage.tsx";
 import OrderFailPage from "../pages/shop/OrderFailPage.tsx";
 import OrderSuccessPage from "../pages/shop/OrderSuccessPage.tsx";
+import MyOrderList from "../pages/shop/MyOrderList.tsx";
+import MyLayout from "../layouts/MyLayout.tsx";
+import MyOrderDetail from "../pages/shop/MyOrderDetail.tsx";
 
 const guestOnlyLoader = () => {
     const isLoggedIn = useAuthStore.getState().isLoggedIn;
@@ -35,8 +38,18 @@ const router = createBrowserRouter([
                 children: [
                     { index: true, element: <OrderPage /> },
                     { path: "success", element: <OrderSuccessPage /> },
-                    { path: "fail", element: <OrderFailPage /> }
+                    { path: "fail", element: <OrderFailPage /> },
                 ]
+            },
+            {
+                path: "my",
+                element: <MyLayout />,
+                children: [
+                    {index: true, element: <div>마이페이지</div>},
+                    {path: "orders", element: <MyOrderList />},
+                    {path: "orders/:id", element: <MyOrderDetail />}
+
+                ],
             }
         ]
     }
