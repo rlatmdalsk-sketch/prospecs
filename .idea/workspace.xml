@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1c9affba-08c7-4b5e-b6e7-381c8313f93c" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/lecture-react-prospecs-frontend-master.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eslint.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/prettier.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/auth.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/axios.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/cart.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/category.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/inquiry.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/order.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/product.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/review.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/upload.api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/home/mainVisual01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/home/mainVisual02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/home/mainVisual03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/home/mainVisual04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/home/mainVisual05.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/home/mainVisual06.jfif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/home/main_men.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/home/main_women.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/logo_bk.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Accordion.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Backdrop.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Breadcrumbs.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Input.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Modal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/Select.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/home/MainSecondSection.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/home/MainVisual.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/Footer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/Header.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/layout/TopHeader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/modals/GlobalModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/modals/PaymentModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/modals/PostcodeModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/modals/ReviewModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/orders/OrderStatusBadge.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/shop/ProductCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/shop/ProductReviews.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/global.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/layouts/Layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/layouts/MyLayout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/(shop)/CartPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/(shop)/MyOrderDetail.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/(shop)/MyOrderList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/(shop)/MyReviewList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/(shop)/OrderFailPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/(shop)/OrderPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/(shop)/OrderSuccessPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/(shop)/ProductDetailPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/(shop)/ProductListPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Home.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Login.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Register.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/router/router.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/useAuthStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/useCartStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/useLayoutStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/useModalStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/stores/useOrderStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/cart.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/category.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/inqury.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/order.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/product.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/productFilter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/review.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/types/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.app.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.node.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vite.config.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;rlatmdalsk-sketch&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/rlatmdalsk-sketch/prospecs&quot;,
+    &quot;accountId&quot;: &quot;2cf55450-c5a0-44b3-b287-abe9c02eab8a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="395khaIhti3qvadjyiuELyX2ikQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "master",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/SEUNGMIN/document/react/lecture-react-prospecs-frontend-master (1)/lecture-react-prospecs-frontend-master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
+    "npm.dev.executor": "Run",
+    "prettierjs.PrettierConfiguration.Package": "C:\\SEUNGMIN\\document\\react\\lecture-react-prospecs-frontend-master (1)\\lecture-react-prospecs-frontend-master\\node_modules\\prettier",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "C:\\SEUNGMIN\\document\\react\\lecture-react-prospecs-frontend-master (1)\\lecture-react-prospecs-frontend-master\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.27397.92" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="1c9affba-08c7-4b5e-b6e7-381c8313f93c" name="변경" comment="" />
+      <created>1769993438925</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1769993438925</updated>
+      <workItem from="1769993440578" duration="3767000" />
+      <workItem from="1770079007280" duration="1939000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
