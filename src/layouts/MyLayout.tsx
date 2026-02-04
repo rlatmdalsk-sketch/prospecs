@@ -10,10 +10,10 @@ function MyLayout() {
                     <div className={twMerge(["text-xl", "font-bold"])}>쇼핑내역</div>
                     <Link to={"/my/orders"}>주문/배송 조회</Link>
                 </div>
-                <div className={twMerge(["space-y-5"])}>
+                <div className={twMerge(["flex", "flex-col", "space-y-5"])}>
                     <div className={twMerge(["text-xl", "font-bold"])}>쇼핑활동</div>
                     <Link to={"/my/reviews"}>리뷰</Link>
-                    <Link to={"my/inquries"}>1:1문의</Link>
+                    <Link to={"/my/inquiries"}>1:1 문의</Link>
                 </div>
             </aside>
             <Outlet />

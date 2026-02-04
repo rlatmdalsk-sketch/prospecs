@@ -8,7 +8,7 @@ interface Option {
 }
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
-    registration: UseFormRegisterReturn;
+    registration?: UseFormRegisterReturn;
     error?: FieldError;
     options: Option[];
 }

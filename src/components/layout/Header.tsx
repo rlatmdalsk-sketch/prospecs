@@ -177,11 +177,11 @@ function Header() {
                                 ["transition-all"],
                                 isTransparent
                                     ? [
-                                          "bg-transparent",
-                                          "border-white",
-                                          "text-white",
-                                          "placeholder:text-white",
-                                      ]
+                                        "bg-transparent",
+                                        "border-white",
+                                        "text-white",
+                                        "placeholder:text-white",
+                                    ]
                                     : ["border-gray-300"],
                                 isMenuOpen && ["border-gray-300"],
                             )}
