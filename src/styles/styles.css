@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+.ProseMirror {
+    min-height: 100%;
+    outline: none; /* 기본 파란색 테두리 제거 */
+}
